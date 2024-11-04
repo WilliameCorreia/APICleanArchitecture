@@ -1,9 +1,11 @@
 using ApiCleanArchitecture.Api.Module.Swagger;
 using ApiCleanArchitecture.Api.Module.Versioning;
-using Asp.Versioning.ApiExplorer;
-using Microsoft.Extensions.Options;
+using ApiCleanArchitecture.Application.UseCases;
+using ApiCleanArchitecture.Domain.IRepository;
+using ApiCleanArchitecture.Infrastructure.Persistence.EntiryFramework;
+using ApiCleanArchitecture.Infrastructure.Persistence.EntiryFramework.Context;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +16,20 @@ builder.Services.AddControllers();
 builder.Services.AddSwagger();
 builder.Services.AddVersioning();
 
-//builder.Services.AddSwagger();
+#region Config Context - EntityFramework
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionSqlServer"));
+});
+#endregion
+
+#region config IOC
+//ApiCleanArchitecture.Application
+builder.Services.AddTransient<PessoaFisicaUseCase>();
+
+//ApiCleanArchitecture.Domain.IRepositories e ApiCleanArchitecture.Domain.Infrastructure.Repositories
+builder.Services.AddTransient<IPessoaFisicaRepository, PessoaFisicaRepository>();
+#endregion
 
 var app = builder.Build();
 

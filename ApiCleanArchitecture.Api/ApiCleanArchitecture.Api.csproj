@@ -18,4 +18,9 @@
     <Folder Include="Module\Versioning\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ApiCleanArchitecture.Application\ApiCleanArchitecture.Application.csproj" />
+    <ProjectReference Include="..\ApiCleanArchitecture.Infrastructure\ApiCleanArchitecture.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

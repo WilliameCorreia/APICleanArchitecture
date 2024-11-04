@@ -10,7 +10,10 @@
     <Folder Include="Interfaces\" />
     <Folder Include="Dtos\" />
     <Folder Include="Mappings\" />
-    <Folder Include="UseCases\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ApiCleanArchitecture.Domain\ApiCleanArchitecture.Domain.csproj" />
   </ItemGroup>
 
 </Project>

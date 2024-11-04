@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+﻿using ApiCleanArchitecture.Application.UseCases;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiCleanArchitecture.Api.V1.Controllers
@@ -9,10 +10,17 @@ namespace ApiCleanArchitecture.Api.V1.Controllers
     [ApiController]
     public class PessoaFisicaController : Controller
     {
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IActionResult Index()
+        private readonly PessoaFisicaUseCase _pessoaFisicaUseCase;
+        public PessoaFisicaController(PessoaFisicaUseCase pessoaFisicaUseCase)
         {
-            return View();
+            _pessoaFisicaUseCase = pessoaFisicaUseCase;
+        }
+
+        [HttpGet(Name = "GetWeatherForecast")]
+        public async Task<ActionResult> Index()
+        {
+            var result = await _pessoaFisicaUseCase.GetAllCirculacaoInterna();
+            return Ok(result);
         }
     }
 }
